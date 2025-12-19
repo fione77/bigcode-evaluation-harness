@@ -1,5 +1,9 @@
-from bigcode_eval.models.base import BaseModel
+# from bigcode_eval.models.base import BaseModel
 from socratic_core import SocraticCodeGenerator
+
+class BaseModel:
+    """Dummy base class so Socratic works without bigcode_eval.models.base"""
+    pass
 
 class Socratic(BaseModel):
     def __init__(self, **kwargs):

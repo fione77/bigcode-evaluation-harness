@@ -1,0 +1,548 @@
+================================================================================
+Problem 1: prob1
+Prompt:
+from typing import List
+
+
+def has_close_elements(numbers: List[float], threshold: float) -> bool:
+    """ Check if in given list of numbers, are any two numbers closer to each other than
+    given threshold.
+    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)
+    False
+    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)
+    True
+    """
+
+
+Generated code:
+def validateArray(arr: list[int]) -> bool:
+    """
+    Validate the input array.
+
+    Args:
+    arr (list[int]): The input array to be validated.
+
+    Returns:
+    bool: True if the array is valid, False otherwise.
+    """
+    # Check if the array is empty
+    if not arr:
+        return False
+    
+    # Check if all elements in the array are integers
+    for element in arr:
+        if not isinstance(element, int):
+            return False
+    
+    return True
+
+
+def findMax(arr: list[int]) -> int:
+    """
+    Find the maximum value in the array.
+
+    Args:
+    arr (list[int]): The input array.
+
+    Returns:
+    int: The maximum value in the array.
+    """
+    # Initialize max_value with the first element of the array
+    max_value = arr[0]
+    
+    # Iterate through the array to find the maximum value
+    for element in arr:
+        # If the current element is greater than max_value, update max_value
+        if element > max_value:
+            max_value = element
+    
+    return max_value
+
+
+def findMaxValue(arr: list[int]) -> int | None:
+    """
+    Find the maximum value in the array.
+
+    Args:
+    arr (list[int]): The input array.
+
+    Returns:
+    int | None: The maximum value in the array, or None if the array is empty.
+
+    Raises:
+    ValueError: If the input array is invalid.
+    """
+    # Validate the input array
+    if not validateArray(arr):
+        raise ValueError("Invalid input")
+    
+    # If the array is empty, return None
+    if not arr:
+        return None
+    
+    # Find and return the maximum value in the array
+    return findMax(arr)
+
+
+# Example usage:
+if __name__ == "__main__":
+    # Test case 1: Valid array
+    arr1 = [1, 2, 3, 4, 5]
+    print(findMaxValue(arr1))  # Output: 5
+
+    # Test case 2: Empty array
+    arr2 = []
+    print(findMaxValue(arr2))  # Output: None
+
+    # Test case 3: Array with a single element
+    arr3 = [5]
+    print(findMaxValue(arr3))  # Output: 5
+
+    # Test case 4: Array with duplicate maximum values
+    arr4 = [1, 2, 3, 5, 5]
+    print(findMaxValue(arr4))  # Output: 5
+
+    # Test case 5: Invalid array (non-integer elements)
+    arr5 = [1, 2, '3', 4, 5]
+    try:
+        print(findMaxValue(arr5))
+    except ValueError as e:
+        print(e)  # Output: Invalid input
+
+pass@1: 1.000
+pass@5: 1.000
+pass@10: 1.000
+
+================================================================================
+Problem 2: prob2
+Prompt:
+from typing import List
+
+
+def separate_paren_groups(paren_string: str) -> List[str]:
+    """ Input to this function is a string containing multiple groups of nested parentheses. Your goal is to
+    separate those group into separate strings and return the list of those.
+    Separate groups are balanced (each open brace is properly closed) and not nested within each other
+    Ignore any spaces in the input string.
+    >>> separate_paren_groups('( ) (( )) (( )( ))')
+    ['()', '(())', '(()())']
+    """
+
+
+Generated code:
+def maxSubarraySum(arr: list[int], return_type: int) -> int:
+    """
+    This function calculates the maximum sum of a subarray within a given array.
+    
+    Args:
+    arr (list[int]): The input array of integers.
+    return_type (int): The type of return value (not used in this implementation).
+    
+    Returns:
+    int: The maximum sum of a subarray.
+    """
+    # Initialize maxSum to the smallest possible integer value
+    maxSum = float('-inf')
+    
+    # Call kadaneAlgorithm to find the maximum sum of a subarray
+    maxSum = kadaneAlgorithm(arr, maxSum)
+    
+    # Call handleEdgeCases to handle edge cases
+    maxSum = handleEdgeCases(arr, maxSum)
+    
+    return maxSum
+
+
+def kadaneAlgorithm(arr: list[int], maxSum: int) -> int:
+    """
+    This function implements Kadane's algorithm to find the maximum sum of a subarray.
+    
+    Args:
+    arr (list[int]): The input array of integers.
+    maxSum (int): The current maximum sum.
+    
+    Returns:
+    int: The updated maximum sum.
+    """
+    # Initialize currentSum to 0
+    currentSum = 0
+    
+    # Iterate through each element in the array
+    for element in arr:
+        # Update currentSum to be the maximum of the current element and the sum of currentSum and the current element
+        currentSum = max(element, currentSum + element)
+        
+        # Update maxSum to be the maximum of maxSum and currentSum
+        maxSum = max(maxSum, currentSum)
+    
+    return maxSum
+
+
+def handleEdgeCases(arr: list[int], maxSum: int) -> int:
+    """
+    This function handles edge cases such as an empty array or an array with all negative numbers.
+    
+    Args:
+    arr (list[int]): The input array of integers.
+    maxSum (int): The current maximum sum.
+    
+    Returns:
+    int: The updated maximum sum.
+    """
+    # Check if the array is empty
+    if not arr:
+        # Return 0, as the sum of an empty array is 0
+        return 0
+    
+    # Check if all elements in the array are negative
+    if all(num < 0 for num in arr):
+        # Return the maximum number in the array, as the maximum sum of a subarray will be the maximum number itself
+        return max(arr)
+    
+    # Check if the array has only one element
+    if len(arr) == 1:
+        # Return the single element, as the maximum sum of a subarray will be the single element itself
+        return arr[0]
+    
+    # If none of the edge cases are met, return maxSum
+    return maxSum
+
+
+# Example usage:
+if __name__ == "__main__":
+    # Test the function with a sample array
+    arr = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+    print(maxSubarraySum(arr, 0))  # Output: 6
+
+    # Test the function with an empty array
+    arr = []
+    print(maxSubarraySum(arr, 0))  # Output: 0
+
+    # Test the function with an array with all negative numbers
+    arr = [-1, -2, -3, -4, -5]
+    print(maxSubarraySum(arr, 0))  # Output: -1
+
+    # Test the function with an array with a single element
+    arr = [5]
+    print(maxSubarraySum(arr, 0))  # Output: 5
+
+pass@1: 1.000
+pass@5: 1.000
+pass@10: 1.000
+
+================================================================================
+Problem 3: prob3
+Prompt:
+
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+
+
+Generated code:
+def validateInput(arr: list[int], n: int) -> bool:
+    """
+    Validate the input array and its size.
+
+    Args:
+    arr (list[int]): The input array of integers.
+    n (int): The size of the input array.
+
+    Returns:
+    bool: True if the input is valid, False otherwise.
+    """
+    # Check if the size of the array is valid
+    if n <= 0:
+        return False
+    
+    # Check if all elements in the array are integers
+    for i in range(n):
+        if not isinstance(arr[i], int):
+            return False
+    
+    return True
+
+
+def kadaneAlgorithm(arr: list[int], n: int) -> int:
+    """
+    Implement Kadane's algorithm to find the maximum subarray sum.
+
+    Args:
+    arr (list[int]): The input array of integers.
+    n (int): The size of the input array.
+
+    Returns:
+    int: The maximum subarray sum.
+    """
+    # Initialize the maximum sum and the current sum to the first element of the array
+    max_sum = arr[0]
+    current_sum = arr[0]
+    
+    # Iterate over the array starting from the second element
+    for i in range(1, n):
+        # Update the current sum to be the maximum of the current element and the sum of the current element and the previous current sum
+        current_sum = max(arr[i], current_sum + arr[i])
+        # Update the maximum sum to be the maximum of the current maximum sum and the current sum
+        max_sum = max(max_sum, current_sum)
+    
+    return max_sum
+
+
+def findMaxSubarraySum(arr: list[int], n: int) -> int:
+    """
+    Find the maximum subarray sum in an array of integers.
+
+    Args:
+    arr (list[int]): The input array of integers.
+    n (int): The size of the input array.
+
+    Returns:
+    int: The maximum subarray sum.
+
+    Raises:
+    ValueError: If the input array is empty or contains non-integer values.
+    """
+    # Validate the input
+    if not validateInput(arr, n):
+        raise ValueError("Invalid input")
+    
+    # Handle the edge case where the array is empty
+    if n == 0:
+        return 0
+    
+    # Handle the edge case where the array has a single element
+    if n == 1:
+        return arr[0]
+    
+    # Perform the main calculation using Kadane's algorithm
+    max_sum = kadaneAlgorithm(arr, n)
+    
+    return max_sum
+
+
+# Test cases
+if __name__ == "__main__":
+    # Test case 1: Input array [1, 2, 3, 4, 5], expected output 15
+    arr1 = [1, 2, 3, 4, 5]
+    n1 = len(arr1)
+    print(findMaxSubarraySum(arr1, n1))  # Output: 15
+    
+    # Test case 2: Input array [-1, -2, -3, -4, -5], expected output -1
+    arr2 = [-1, -2, -3, -4, -5]
+    n2 = len(arr2)
+    print(findMaxSubarraySum(arr2, n2))  # Output: -1
+    
+    # Test case 3: Input array [1, -2, 3, -4, 5], expected output 5
+    arr3 = [1, -2, 3, -4, 5]
+    n3 = len(arr3)
+    print(findMaxSubarraySum(arr3, n3))  # Output: 5
+
+pass@1: 1.000
+pass@5: 1.000
+pass@10: 1.000
+
+================================================================================
+Problem 4: prob4
+Prompt:
+from typing import List
+
+
+def below_zero(operations: List[int]) -> bool:
+    """ You're given a list of deposit and withdrawal operations on a bank account that starts with
+    zero balance. Your task is to detect if at any point the balance of account fallls below zero, and
+    at that point function should return True. Otherwise it should return False.
+    >>> below_zero([1, 2, 3])
+    False
+    >>> below_zero([1, 2, -4, 5])
+    True
+    """
+
+
+Generated code:
+def validateInput(arr: list[int], length: int) -> bool:
+    """
+    Validates the input array and length.
+
+    Args:
+    arr (list[int]): The input array of integers.
+    length (int): The length of the input array.
+
+    Returns:
+    bool: True if the input is valid, False otherwise.
+    """
+    # Check if the array is None or the length is less than or equal to 0
+    if arr is None or length <= 0:
+        return False
+    # Check if the length of the array matches the given length
+    if len(arr) != length:
+        return False
+    return True
+
+
+def kadaneAlgorithm(arr: list[int], length: int) -> int:
+    """
+    Implements Kadane's algorithm to find the maximum subarray sum.
+
+    Args:
+    arr (list[int]): The input array of integers.
+    length (int): The length of the input array.
+
+    Returns:
+    int: The maximum subarray sum.
+    """
+    # Initialize the maximum sum and the current sum with the first element of the array
+    max_sum = arr[0]
+    current_sum = arr[0]
+    
+    # Iterate through the array starting from the second element
+    for i in range(1, length):
+        # Update the current sum to be the maximum of the current element and the sum of the current element and the previous current sum
+        current_sum = max(arr[i], current_sum + arr[i])
+        # Update the maximum sum to be the maximum of the current maximum sum and the current sum
+        max_sum = max(max_sum, current_sum)
+    
+    return max_sum
+
+
+def maxSubarraySum(arr: list[int], length: int) -> int:
+    """
+    Finds the maximum sum of a subarray within a given array of integers.
+
+    Args:
+    arr (list[int]): The input array of integers.
+    length (int): The length of the input array.
+
+    Returns:
+    int: The maximum subarray sum.
+
+    Raises:
+    ValueError: If the input array is None or the length is less than or equal to 0.
+    ValueError: If the length of the array does not match the given length.
+    """
+    # Validate the input array and length
+    if not validateInput(arr, length):
+        raise ValueError("Invalid input: array is None, length is less than or equal to 0, or length does not match the array length")
+    
+    # Implement Kadane's algorithm to find the maximum subarray sum
+    max_sum = kadaneAlgorithm(arr, length)
+    return max_sum
+
+
+# Example usage
+if __name__ == "__main__":
+    arr = [-2, -3, 4, -1, -2, 1, 5, -3]
+    length = len(arr)
+    try:
+        max_sum = maxSubarraySum(arr, length)
+        print("Maximum subarray sum:", max_sum)
+    except ValueError as e:
+        print("Error:", e)
+
+pass@1: 1.000
+pass@5: 1.000
+pass@10: 1.000
+
+================================================================================
+Problem 5: prob5
+Prompt:
+from typing import List
+
+
+def mean_absolute_deviation(numbers: List[float]) -> float:
+    """ For a given list of input numbers, calculate Mean Absolute Deviation
+    around the mean of this dataset.
+    Mean Absolute Deviation is the average absolute difference between each
+    element and a centerpoint (mean in this case):
+    MAD = average | x - x_mean |
+    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])
+    1.0
+    """
+
+
+Generated code:
+def initialize_variables() -> tuple:
+    """
+    Initializes variables to keep track of the maximum sum and the current sum.
+
+    Returns:
+        tuple: A tuple containing the maximum sum and the current sum.
+    """
+    max_sum = float('-inf')
+    current_sum = 0
+    return max_sum, current_sum
+
+
+def update_max_sum(current_sum: int, max_sum: int) -> int:
+    """
+    Updates the maximum sum if the current sum is greater.
+
+    Args:
+        current_sum (int): The sum of the current subarray.
+        max_sum (int): The maximum sum of a subarray found so far.
+
+    Returns:
+        int: The updated maximum sum.
+    """
+    return max(max_sum, current_sum)
+
+
+def max_subarray_sum(arr: list[int]) -> int:
+    """
+    Returns the maximum sum of a subarray within the given array of integers.
+
+    Args:
+        arr (list[int]): The input array of integers.
+
+    Returns:
+        int: The maximum sum of a subarray.
+
+    Raises:
+        ValueError: If the input array is None or empty.
+    """
+    # Check if the input array is None or empty
+    if arr is None:
+        raise ValueError("Null array")
+    if len(arr) == 0:
+        raise ValueError("Empty array")
+
+    # Initialize variables to keep track of the maximum sum and the current sum
+    max_sum, current_sum = initialize_variables()
+
+    # Iterate through the array
+    for element in arr:
+        # For each element, decide whether to include it in the current subarray or start a new subarray
+        current_sum = max(element, current_sum + element)
+        # Update the maximum sum if the current sum is greater
+        max_sum = update_max_sum(current_sum, max_sum)
+
+    return max_sum
+
+
+# Example usage:
+if __name__ == "__main__":
+    # Test cases
+    test_cases = [
+        [-2, 1, -3, 4, -1, 2, 1, -5, 4],
+        [1, 2, 3, 4, 5],
+        [-1, -2, -3, -4, -5],
+        [5],
+        []
+    ]
+
+    for test_case in test_cases:
+        try:
+            result = max_subarray_sum(test_case)
+            print(f"Input: {test_case}, Maximum subarray sum: {result}")
+        except ValueError as e:
+            print(f"Input: {test_case}, Error: {e}")
+
+pass@1: 1.000
+pass@5: 1.000
+pass@10: 1.000
